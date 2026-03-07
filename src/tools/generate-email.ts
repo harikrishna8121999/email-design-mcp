@@ -96,6 +96,8 @@ IMPORTANT:
     html: '',
     brandId,
     createdAt: new Date().toISOString(),
+    currentVersion: 0,
+    versions: [],
     refinements: [],
   };
 

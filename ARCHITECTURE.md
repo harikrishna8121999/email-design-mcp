@@ -588,29 +588,29 @@ Each template is MJML with placeholder variables:
 
 ## Development Phases
 
-### Phase 1: Foundation
-- [ ] Project setup (TypeScript, MCP SDK)
-- [ ] Basic server with stdio transport
-- [ ] `compile_mjml` tool (simplest, proves MCP works)
-- [ ] Test with Claude Desktop
+### Phase 1: Foundation ✅
+- [x] Project setup (TypeScript, MCP SDK)
+- [x] Basic server with stdio transport
+- [x] `compile_mjml` tool (simplest, proves MCP works)
+- [x] Test with Claude Desktop
 
-### Phase 2: Core Tools
-- [ ] `generate_email` tool
-- [ ] `setup_brand` tool (basic, manual input)
-- [ ] Local storage for brand/history
-- [ ] 2-3 bundled templates
-- [ ] **Prompt engineering layer** — expert system prompts, MJML guide, design rules
-- [ ] **Layout variants** — at least 2-3 variants per email type to avoid repetitive output
+### Phase 2: Core Tools ✅
+- [x] `generate_email` tool
+- [x] `setup_brand` tool (basic, manual input)
+- [x] Local storage for brand/history
+- [x] 2-3 bundled templates
+- [x] **Prompt engineering layer** — expert system prompts, MJML guide, design rules
+- [x] **Layout variants** — at least 2-3 variants per email type to avoid repetitive output
 
-### Phase 3: Intelligence
-- [ ] Website scraping for brand extraction
-- [ ] `validate_email` tool
-- [ ] `refine_email` tool with section-level targeting
-- [ ] `screenshot_to_email` tool (leverages host AI's vision to describe layout, then generates matching MJML)
-- [ ] **Preview system** — live preview server + image thumbnail in chat
-- [ ] **Section labeling** — auto-label MJML sections for targeted refinements
-- [ ] **Refinement history** — undo, compare, branch between versions
-- [ ] MCP Resources (brand, templates, history)
+### Phase 3: Intelligence ✅
+- [x] `validate_email` tool
+- [x] `refine_email` tool with section-level targeting
+- [x] `screenshot_to_email` tool (leverages host AI's vision to describe layout, then generates matching MJML)
+- [x] **Preview system** — live preview server + image thumbnail in chat
+- [x] **Section labeling** — auto-label MJML sections for targeted refinements
+- [x] **Refinement history** — undo, compare, branch between versions
+- [x] MCP Resources (brand, templates, history)
+- [x] `export_email` tool
 
 ### Phase 4: Polish
 - [ ] MCP Prompts (guided workflows)
@@ -619,6 +619,15 @@ Each template is MJML with placeholder variables:
 - [ ] Storage housekeeping (auto-cleanup old history)
 - [ ] Documentation + installation guide
 - [ ] npm publish
+
+### Phase 5: Enhancements (post-MVP)
+- [ ] Website scraping for brand extraction (cheerio + css-tree)
+- [ ] Image thumbnail in chat (Puppeteer/Playwright screenshot rendering)
+- [ ] Figma to email (Figma API integration)
+- [ ] Direct ESP push (Klaviyo, Mailchimp, HubSpot APIs)
+- [ ] Unsplash/Pexels image integration
+- [ ] Zapier webhook export
+- [ ] Download as .zip with images
 
 ---
 
