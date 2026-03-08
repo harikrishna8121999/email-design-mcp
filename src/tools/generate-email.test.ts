@@ -38,7 +38,7 @@ describe('generate-email', () => {
     expect(parsed.success).toBe(true);
     expect(parsed.emailType).toBe('welcome');
     expect(parsed.brandId).toBe('test-brand');
-    expect(parsed.systemPrompt).toContain('expert email designer');
+    expect(parsed.systemPrompt).toContain('world-class email designer');
     expect(parsed.systemPrompt).toContain('MJML');
     expect(parsed.systemPrompt).toContain('Test Brand');
     expect(parsed.systemPrompt).toContain('#FF6B35');
@@ -113,9 +113,9 @@ describe('generate-email', () => {
     });
 
     const parsed = JSON.parse(result.content[0].text);
-    expect(parsed.systemPrompt).toContain('Spacing Rules');
-    expect(parsed.systemPrompt).toContain('Typography Rules');
-    expect(parsed.systemPrompt).toContain('CTA Button Rules');
+    expect(parsed.systemPrompt).toContain('Design Checklist');
+    expect(parsed.systemPrompt).toContain('Recipe Book');
+    expect(parsed.systemPrompt).toContain('CTAs are design statements');
   });
 
   it('includes layout variant instructions', async () => {

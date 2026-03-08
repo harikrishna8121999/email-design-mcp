@@ -71,6 +71,9 @@ export async function setupBrandHandler(args: z.infer<typeof setupBrandSchema>) 
   const brandName = args.name || extracted?.name || 'My Brand';
   const primaryColor = args.primary_color || brandColors?.primary || '#2563eb';
 
+  const colorsWereExtracted = !!(brandColors && !args.primary_color);
+  const usingDefaults = !brandColors && !args.primary_color;
+
   const now = new Date().toISOString();
 
   const brand: BrandProfile = {
@@ -119,6 +122,12 @@ export async function setupBrandHandler(args: z.infer<typeof setupBrandSchema>) 
             ...(extractionNote ? { extraction: extractionNote } : {}),
             ...(extracted?.colors.length ? { extractedColors: extracted.colors } : {}),
             ...(extracted?.fonts.length ? { extractedFonts: extracted.fonts } : {}),
+            ...(usingDefaults && args.url ? {
+              colorWarning: `Could not extract brand colors from ${args.url}. Using default colors. You can override by providing primary_color, secondary_color, and accent_color manually.`,
+            } : {}),
+            ...(colorsWereExtracted ? {
+              colorNote: `Auto-extracted brand colors from website: primary=${brand.colors.primary}, secondary=${brand.colors.secondary}, accent=${brand.colors.accent}`,
+            } : {}),
             brand,
             totalBrands: allBrands.length,
             hint: 'Use this brand with generate_email by setting brand_id to "' + brand.id + '".',

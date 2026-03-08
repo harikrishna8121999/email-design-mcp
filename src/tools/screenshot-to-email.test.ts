@@ -23,7 +23,7 @@ describe('screenshot_to_email tool', () => {
     const data = JSON.parse(result.content[0].text);
     expect(data.success).toBe(true);
     expect(data.emailId).toBeDefined();
-    expect(data.systemPrompt).toContain('Recreate Email from Design Description');
+    expect(data.designGuidelines).toContain('Reproduction Rules');
     expect(data.userInstruction).toContain('Welcome aboard');
   });
 

@@ -1,45 +1,50 @@
 import type { BrandProfile } from '../../types/brand.js';
 
+/**
+ * Darken a hex color by a given factor (0-1).
+ * factor=0.4 means 40% darker.
+ */
+function darkenHex(hex: string, factor: number): string {
+  const h = hex.replace('#', '');
+  const r = Math.round(parseInt(h.substring(0, 2), 16) * (1 - factor));
+  const g = Math.round(parseInt(h.substring(2, 4), 16) * (1 - factor));
+  const b = Math.round(parseInt(h.substring(4, 6), 16) * (1 - factor));
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+}
+
 export function buildBrandContext(brand: BrandProfile): string {
-  return `## BRAND CONTEXT
+  return `## BRAND CONTEXT: ${brand.name}
 
-You are designing an email for **${brand.name}**.
+**MANDATORY: You MUST use these exact brand colors throughout the email. Do NOT substitute generic blues/purples/indigos. The hero gradient, CTA buttons, accent elements, and links must all use these specific hex values.**
 
-### Brand Colors
-- Primary (use for CTAs and key highlights): ${brand.colors.primary}
-- Secondary (use for accents and secondary elements): ${brand.colors.secondary}
-- Accent (use sparingly for emphasis): ${brand.colors.accent}
+### Colors (USE THESE EXACT HEX VALUES)
+- Primary: ${brand.colors.primary} — USE for hero gradients, key highlights, section backgrounds
+- Secondary: ${brand.colors.secondary} — USE for gradient endpoints, supporting sections
+- Accent: ${brand.colors.accent} — USE for CTAs, links, interactive elements
+- Dark BG: ${darkenHex(brand.colors.primary, 0.4)} — USE for dark dramatic sections (header, footer, stat bars). Derived from primary.
 - Background: ${brand.colors.background}
 - Text: ${brand.colors.text}
 
 ### Typography
-- Heading font: ${brand.fonts.heading}, Arial, sans-serif
-- Body font: ${brand.fonts.body}, Arial, sans-serif
+- Heading: ${brand.fonts.heading}, 'Helvetica Neue', Arial, sans-serif
+- Body: ${brand.fonts.body}, 'Helvetica Neue', Arial, sans-serif
 
-${brand.logo ? `### Logo\nLogo URL: ${brand.logo}` : '### Logo\nNo logo provided — omit logo section or use a text-based header with the brand name.'}
+${brand.logo ? `### Logo\nUse this logo image in the header: ${brand.logo}` : '### Logo\nNo logo — use bold text header with brand name.'}
 
-### Voice & Tone
+### Voice
 - Industry: ${brand.industry}
-- Target audience: ${brand.audience}
-- Tone: ${brand.tone}
-
-### Brand Rules
-- Use the primary color ONLY for CTA buttons and key highlights
-- Use the secondary color for section backgrounds, borders, accents
-- Body text must use the text color on the background color
-- Maintain the ${brand.tone} tone throughout all copy
-- Write copy appropriate for the ${brand.industry} industry and ${brand.audience} audience`;
+- Audience: ${brand.audience}
+- Tone: ${brand.tone}`;
 }
 
 export function buildNoBrandContext(): string {
   return `## BRAND CONTEXT
 
-No brand profile is configured. Use a clean, professional default style:
-- Primary color: #2563EB (blue)
-- Background: #ffffff
-- Text: #1a1a1a
-- Font: Arial, sans-serif
-- Tone: professional and friendly
+No brand profile configured. Use a modern default:
+- Primary: #6366f1 (indigo) | Secondary: #8b5cf6 (violet) | Accent: #a78bfa
+- Background: #ffffff | Text: #0f172a
+- Font: 'Helvetica Neue', Arial, sans-serif
+- Tone: modern, confident, warm
 
-The user can set up a brand profile using the \`setup_brand\` tool for personalized emails.`;
+Set up a brand profile with \`setup_brand\` for personalized emails.`;
 }

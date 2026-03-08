@@ -79,6 +79,73 @@ describe('brand-extractor', () => {
       expect(result.fonts).toContain('Roboto');
     });
 
+    it('extracts rgb() colors and converts to hex', async () => {
+      const html = `<html><head><title>Test</title><style>
+        .btn { background: rgb(255, 87, 51); }
+        .link { color: rgba(100, 200, 50, 0.8); }
+      </style></head><body></body></html>`;
+
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(html),
+      });
+
+      const result = await extractBrandFromUrl('https://test.com');
+
+      expect(result.colors).toContain('#ff5733');
+      expect(result.colors).toContain('#64c832');
+    });
+
+    it('extracts colors from SVG fill attributes', async () => {
+      const html = `<html><head><title>Test</title></head><body>
+        <svg><path fill="#e74c3c" d="M0 0"/><circle stroke="#3498db" /></svg>
+      </body></html>`;
+
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(html),
+      });
+
+      const result = await extractBrandFromUrl('https://test.com');
+
+      expect(result.colors).toContain('#e74c3c');
+      expect(result.colors).toContain('#3498db');
+    });
+
+    it('extracts colors from CSS custom properties without brand/color keywords', async () => {
+      const html = `<html><head><title>Test</title><style>
+        :root { --cta-bg: #ff6b35; --nav-link: #2a9d8f; }
+      </style></head><body></body></html>`;
+
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(html),
+      });
+
+      const result = await extractBrandFromUrl('https://test.com');
+
+      expect(result.colors).toContain('#ff6b35');
+      expect(result.colors).toContain('#2a9d8f');
+    });
+
+    it('sorts colors by saturation (most colorful first)', async () => {
+      const html = `<html><head><title>Test</title><style>
+        .muted { color: #8b9dad; }
+        .vibrant { color: #ff0000; }
+        .medium { color: #5b8c5a; }
+      </style></head><body></body></html>`;
+
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(html),
+      });
+
+      const result = await extractBrandFromUrl('https://test.com');
+
+      // Most saturated color should come first
+      expect(result.colors[0]).toBe('#ff0000');
+    });
+
     it('filters out common non-brand colors', async () => {
       const html = `<html><head><title>Test</title></head><body>
         <div style="color: #ffffff; background-color: #000000;"></div>
@@ -151,11 +218,9 @@ describe('brand-extractor', () => {
   });
 
   describe('pickBrandColors', () => {
-    it('returns defaults when no colors extracted', () => {
+    it('returns null when no colors extracted', () => {
       const result = pickBrandColors([]);
-      expect(result.primary).toBe('#2563eb');
-      expect(result.secondary).toBe('#64748b');
-      expect(result.accent).toBe('#f59e0b');
+      expect(result).toBeNull();
     });
 
     it('uses first color as primary', () => {

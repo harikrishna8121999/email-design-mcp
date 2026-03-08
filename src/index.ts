@@ -71,7 +71,7 @@ server.tool(
 
 server.tool(
   'screenshot_to_email',
-  'Convert a design description (from a screenshot or mockup) into a branded MJML email. Describe the layout, colors, sections, and content — the AI will generate matching MJML.',
+  'Convert a design description (from a screenshot or mockup) into a branded MJML email. Describe the layout, colors, sections, and content — the AI will generate matching MJML. Supports multiple screenshots for long emails (pass an array of descriptions).',
   screenshotToEmailSchema.shape,
   async (args) => screenshotToEmailHandler(screenshotToEmailSchema.parse(args)),
 );
