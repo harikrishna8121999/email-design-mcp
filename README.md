@@ -149,7 +149,7 @@ History is automatically cleaned up after 30 days (configurable in `config.json`
 ## Development
 
 ```bash
-git clone https://github.com/anthropics/email-design-mcp.git
+git clone https://github.com/harikrishna8121999/email-design-mcp.git
 cd email-design-mcp
 npm install
 npm run dev        # Watch mode

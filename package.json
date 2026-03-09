@@ -1,7 +1,7 @@
 {
   "name": "email-design-mcp",
   "version": "0.3.0",
-  "description": "MCP server for AI-assisted email template design and generation",
+  "description": "Design and generate responsive email templates with AI — MCP server for Claude, Cursor, VS Code Copilot. Brand-aware, MJML-powered, no API keys needed.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -24,16 +24,26 @@
   ],
   "keywords": [
     "mcp",
+    "mcp-server",
     "model-context-protocol",
     "email",
-    "mjml",
-    "ai",
-    "design",
-    "template",
+    "email-template",
     "email-design",
+    "email-generator",
+    "mjml",
     "responsive-email",
+    "html-email",
+    "ai",
     "claude",
-    "cursor"
+    "cursor",
+    "vscode",
+    "copilot",
+    "newsletter",
+    "marketing-email",
+    "transactional-email",
+    "brand",
+    "design-system",
+    "no-code"
   ],
   "license": "MIT",
   "repository": {
