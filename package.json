@@ -38,9 +38,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anthropics/email-design-mcp.git"
+    "url": "git+https://github.com/harikrishna8121999/email-design-mcp.git"
   },
-  "homepage": "https://github.com/anthropics/email-design-mcp#readme",
+  "homepage": "https://github.com/harikrishna8121999/email-design-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
     "cheerio": "^1.2.0",
