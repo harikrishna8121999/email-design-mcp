@@ -275,37 +275,30 @@ export const IMAGE_LIBRARY: ImageCategory[] = [
   ICONS_ILLUSTRATIONS,
 ];
 
+/** Max images per category in the compact prompt to control token usage */
+const MAX_PER_CATEGORY = 3;
+
 /**
- * Build the image library prompt for the AI.
- * Provides categorized real images to use instead of placehold.co.
+ * Build a compact image library prompt for the AI.
+ * Uses single-line format and limits images per category to save tokens.
  */
 export function buildImageLibraryPrompt(): string {
-  let prompt = `## IMAGE LIBRARY — USE REAL IMAGES, NOT PLACEHOLDERS
+  let prompt = `## IMAGE LIBRARY — Use real Unsplash images, NOT placehold.co
 
-You have access to a curated library of free, high-quality images from Unsplash.
-**ALWAYS use these real images instead of placehold.co placeholder boxes.**
-Only use placehold.co as a last resort for very specific brand icons or logo placeholders where no library image fits.
-
-Pick images that match the email's context, industry, and mood. Mix categories for visual variety.
+Pick images matching the email's context/mood. Use placehold.co ONLY for brand logos.
 
 `;
 
   for (const category of IMAGE_LIBRARY) {
-    prompt += `### ${category.name}\n${category.description}\n\n`;
-    for (const img of category.images) {
-      prompt += `- \`${img.url}\`\n  alt="${img.alt}" | tags: ${img.tags.join(', ')}\n`;
+    prompt += `**${category.name}** (${category.description}):\n`;
+    const selected = category.images.slice(0, MAX_PER_CATEGORY);
+    for (const img of selected) {
+      prompt += `${img.url} — ${img.alt} [${img.tags.join(', ')}]\n`;
     }
     prompt += '\n';
   }
 
-  prompt += `### IMAGE SELECTION RULES
-- **Hero backgrounds**: Pick from "Hero Backgrounds" or "Abstract & Patterns" — choose based on brand mood (dark/techy vs bright/creative)
-- **Product sections**: Use "Tech & Product" for SaaS/tech, "E-commerce" for retail, "Lifestyle" for B2C
-- **Feature icons**: Use "Icons & Illustrations" at 80x80 size, or crop abstract images
-- **Visual breakers**: Use "Abstract & Patterns" as full-width section dividers between content blocks
-- **Context matters**: A fintech email → dashboard imagery. A lifestyle brand → people imagery. A dev tool → code/workspace imagery.
-- **Mix it up**: Never use the same image twice in one email. Use at least 3 different images per email.
-- **Brand-specific**: If the brand has a logo URL, use it. For product-specific screenshots that don't exist in the library, THEN use placehold.co with brand colors and descriptive text.`;
+  prompt += `**Rules**: Use 3+ different images per email. Hero bg from Hero/Abstract. Icons from Icons category (80x80) — NEVER use emoji as icons. Match context: fintech→dashboards, lifestyle→people, dev→code.`;
 
   return prompt;
 }

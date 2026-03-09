@@ -7,6 +7,7 @@ import { MJML_GUIDE_PROMPT } from '../prompts/system/mjml-guide.js';
 import { buildBrandContext, buildNoBrandContext } from '../prompts/system/brand-injector.js';
 import { DESIGN_RULES } from '../prompts/design-rules/index.js';
 import { selectLayoutVariant } from '../prompts/layouts/index.js';
+import { buildImageLibraryPrompt } from '../prompts/system/image-library.js';
 import type { EmailType, GeneratedEmail } from '../types/email.js';
 
 const emailTypes: [string, ...string[]] = ['welcome', 'newsletter', 'promotional', 'transactional', 'custom'];
@@ -62,10 +63,12 @@ export async function generateEmailHandler(args: z.infer<typeof generateEmailSch
     : '## LAYOUT\n\nUse a clean, professional single-column layout appropriate for the email type.';
 
   // Compose the full system prompt
+  const imageLibrary = buildImageLibraryPrompt();
   const systemPrompt = [
     EMAIL_EXPERT_PROMPT,
     MJML_GUIDE_PROMPT,
     DESIGN_RULES,
+    imageLibrary,
     brandContext,
     layoutInstructions,
   ].join('\n\n---\n\n');
@@ -83,7 +86,8 @@ IMPORTANT:
 - Include all sections as described in the layout instructions
 - Use the brand colors and fonts specified in the brand context
 - Add section label comments (<!-- section:header -->, <!-- section:hero -->, etc.)
-- Use placeholder images from https://placehold.co/ where needed
+- Use REAL images from the Image Library — hero backgrounds, product shots, feature icons. NEVER use emoji characters as icons. Use placehold.co ONLY for brand-specific logos.
+- Include at least 3 images: hero background + product/lifestyle shot + feature icons
 - Include an unsubscribe link in the footer`;
 
   // Create email record
